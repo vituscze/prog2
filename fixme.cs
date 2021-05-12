@@ -24,6 +24,8 @@ namespace ConsoleApp1
             }
 
             // FIXME: Store the result in the dictionary
+            memoized.Keys = ContainsKey(n);
+            memoized.Values = Calculate(n - 1) + Calculate(n - 2);
             // Create a pull request with the fixed code.
             return Calculate(n - 1) + Calculate(n - 2);
         }
