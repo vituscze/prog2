@@ -22,6 +22,11 @@ namespace ConsoleApp1
             {
                 return memoized[n];
             }
+            else
+            {
+                memoized[n]=n;
+                return memoizd[n];
+            }
 
             // FIXME: Store the result in the dictionary
             // Create a pull request with the fixed code.
