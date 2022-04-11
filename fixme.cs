@@ -25,7 +25,8 @@ namespace ConsoleApp1
 
             // FIXME: Store the result in the dictionary
             // Create a pull request with the fixed code.
-            return Calculate(n - 1) + Calculate(n - 2);
+            memorized[n] = Calculate(n - 1) + Calculate(n - 2);
+            return memorized[n];
         }
     }
 
