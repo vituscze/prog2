@@ -18,14 +18,17 @@ namespace ConsoleApp1
             if (n == 0) return 0;
             if (n == 1) return 1;
 
-            if (memoized.ContainsKey(n))
+            if (memoized.ContainsKey(n)) 
             {
                 return memoized[n];
             }
 
-            // FIXME: Store the result in the dictionary
-            // Create a pull request with the fixed code.
-            return Calculate(n - 1) + Calculate(n - 2);
+            ulong nextNumber = Calculate(n - 1) + Calculate(n - 2);
+            
+            // FIXED: Store the result in the dictionary
+            memoized[n] = nextNumber;
+
+            return nextNumber;
         }
     }
 
