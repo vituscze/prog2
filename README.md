@@ -1,6 +1,6 @@
 # Cvičení z Programování II (NPRG031) 
 
-Cvičení jsou každý týden v pondělí 15:40.
+Cvičení jsou každý týden v pátek 12:20.
 
 # Užitečné linky
 
