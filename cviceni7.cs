@@ -10,7 +10,7 @@ namespace ConsoleApp1
 {
     using Event = EventQueue.Event;
 
-    sealed class EventQueue : IEnumerable<Event>
+    sealed class EventQueue
     {
         private interface IEventAccess
         {
@@ -46,45 +46,10 @@ namespace ConsoleApp1
             EventState IEventAccess.State { get => State; set => State = value; }
         }
 
-        private class EventEnumerator : IEnumerator<Event>
-        {
-            private EventQueue queue;
-            private bool first = true;
-
-            public EventEnumerator(EventQueue eq) => queue = eq;
-
-            public Event Current { get; private set; }
-
-            object IEnumerator.Current => Current;
-
-            public void Dispose() { }
-
-            public bool MoveNext()
-            {
-                if (first)
-                {
-                    first = false;
-                    Current = queue.head;
-                }
-                else
-                {
-                    Current = (Current as IEventAccess).Next;
-                }
-
-                return Current != null;
-            }
-
-            public void Reset() => first = true;
-        }
-
         private Event head;
         private Event tail;
         
         public ulong CurrentTime { get; private set; }
-
-        public IEnumerator<Event> GetEnumerator() => new EventEnumerator(this);
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         private void Unlink(Event e)
         {
