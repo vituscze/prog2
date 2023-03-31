@@ -443,7 +443,7 @@ namespace ConsoleApp1
         {
             state.ReadyEvent = null;
             // TODO: add some way to select spells here
-            Spell spell = Spells.TestSpell;
+            Spell? spell = Spells.TestSpell;
             if (spell != null && spell.Ready())
             {
                 ScheduleCast(spell);

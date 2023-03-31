@@ -462,13 +462,13 @@ namespace ConsoleApp1
 
     interface IRotationLogic
     {
-        Spell ChooseSpell(Sim sim);
+        Spell? ChooseSpell(Sim sim);
         void Reset();
     }
 
     class NormalLogic : IRotationLogic
     {
-        public Spell ChooseSpell(Sim sim)
+        public Spell? ChooseSpell(Sim sim)
         {
             if (sim.Buffs.FingersOfFrost.Stack > 0)
             {
@@ -485,7 +485,7 @@ namespace ConsoleApp1
 
     class FireBlastLogic : IRotationLogic
     {
-        public Spell ChooseSpell(Sim sim)
+        public Spell? ChooseSpell(Sim sim)
         {
             if (sim.Spells.FireBlast.Ready())
             {
@@ -563,7 +563,7 @@ namespace ConsoleApp1
         private void BeginCast()
         {
             state.ReadyEvent = null;
-            Spell spell = logic.ChooseSpell(this);
+            Spell? spell = logic.ChooseSpell(this);
             if (spell != null && spell.Ready())
             {
                 ScheduleCast(spell);
