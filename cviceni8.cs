@@ -14,8 +14,8 @@ namespace ConsoleApp1
     {
         private interface IEventAccess
         {
-            Event Prev { get; set; }
-            Event Next { get; set; }
+            Event? Prev { get; set; }
+            Event? Next { get; set; }
             ulong Time { get; set; }
             Event.EventState State { get; set; }
         }
@@ -30,8 +30,8 @@ namespace ConsoleApp1
                 Cancelled
             }
 
-            private Event prev;
-            private Event next;
+            private Event? prev;
+            private Event? next;
 
             public ulong Time { get; private set; }
             public EventState State { get; private set; }
@@ -40,22 +40,22 @@ namespace ConsoleApp1
 
             public Event() => State = EventState.Created;
 
-            Event IEventAccess.Prev { get => prev; set => prev = value; }
-            Event IEventAccess.Next { get => next; set => next = value; }
+            Event? IEventAccess.Prev { get => prev; set => prev = value; }
+            Event? IEventAccess.Next { get => next; set => next = value; }
             ulong IEventAccess.Time { get => Time; set => Time = value; }
             EventState IEventAccess.State { get => State; set => State = value; }
         }
 
-        private Event head;
-        private Event tail;
+        private Event? head;
+        private Event? tail;
         
         public ulong CurrentTime { get; private set; }
 
         private void Unlink(Event e)
         {
             IEventAccess ea = e;
-            Event prev = ea.Prev;
-            Event next = ea.Next;
+            Event? prev = ea.Prev;
+            Event? next = ea.Next;
             ea.Prev = null;
             ea.Next = null;
 
@@ -78,7 +78,7 @@ namespace ConsoleApp1
             }
         }
 
-        private void Link(Event e, Event prev, Event next)
+        private void Link(Event e, Event? prev, Event? next)
         {
             IEventAccess ea = e;
             ea.Prev = prev;
@@ -103,8 +103,8 @@ namespace ConsoleApp1
             }
         }
 
-        private void LinkAfter(Event e, Event prev) => Link(e, prev, prev != null ? (prev as IEventAccess).Next : head);
-        private void LinkBefore(Event e, Event next) => Link(e, next != null ? (next as IEventAccess).Prev : tail, next);
+        private void LinkAfter(Event e, Event? prev) => Link(e, prev, prev != null ? (prev as IEventAccess).Next : head);
+        private void LinkBefore(Event e, Event? next) => Link(e, next != null ? (next as IEventAccess).Prev : tail, next);
 
         public void AddEvent(ulong timeDiff, Event e)
         {
@@ -167,7 +167,7 @@ namespace ConsoleApp1
 
         public void RemoveEvent(Event e)
         {
-            if (e == null || e.State != Event.EventState.Scheduled)
+            if (e.State != Event.EventState.Scheduled)
             {
                 return;
             }
@@ -243,7 +243,7 @@ namespace ConsoleApp1
         protected Sim sim;
         protected int maxStack;
         protected ulong duration;
-        protected Event expiration;
+        protected Event? expiration;
 
         public int Stack { get; protected set; }
 
@@ -306,7 +306,11 @@ namespace ConsoleApp1
                 return;
             }
 
-            sim.Events.RemoveEvent(expiration);
+            if (expiration != null)
+            {
+                sim.Events.RemoveEvent(expiration);
+            }
+
             OnExpiration();
         }
 
@@ -525,9 +529,9 @@ namespace ConsoleApp1
 
         private struct SimState
         {
-            public Event ReadyEvent;
-            public Event CastEvent;
-            public Spell Casting;
+            public Event? ReadyEvent;
+            public Event? CastEvent;
+            public Spell? Casting;
             public ulong GcdReady;
         }
 
@@ -575,7 +579,7 @@ namespace ConsoleApp1
         private void FinishCast()
         {
             state.CastEvent = null;
-            state.Casting.Execute();
+            state.Casting?.Execute();
             state.Casting = null;
             ScheduleReady();
         }
