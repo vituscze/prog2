@@ -23,10 +23,10 @@ namespace ConsoleApp1
                 return memoized[n];
             }
 
-            // FIXME: Store the result in the dictionary
-            // Create a pull request with the fixed code.
-            return Calculate(n - 1) + Calculate(n - 2);
-        }
+            ulong result = Calculate(n - 1) + Calculate(n - 2);
+            memoized[n] = result;
+            return result; 
+  	}
     }
 
     class Program
