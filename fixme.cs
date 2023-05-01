@@ -11,21 +11,20 @@ namespace ConsoleApp1
 {
     class Fib
     {
-        private Dictionary<int, ulong> memoized = new Dictionary<int, ulong>();
+        private Dictionary<int, ulong> memorized = new Dictionary<int, ulong>();
 
         public ulong Calculate(int n)
         {
             if (n == 0) return 0;
             if (n == 1) return 1;
 
-            if (memoized.ContainsKey(n))
+            if (memorized.ContainsKey(n))
             {
-                return memoized[n];
+                return memorized[n];
             }
 
-            // FIXME: Store the result in the dictionary
-            // Create a pull request with the fixed code.
-            return Calculate(n - 1) + Calculate(n - 2);
+			memorized[n] = Calculate(n - 1) + Calculate(n - 2);
+            return memorized[n];
         }
     }
 
