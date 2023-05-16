@@ -18,14 +18,12 @@ namespace ConsoleApp1
             if (n == 0) return 0;
             if (n == 1) return 1;
 
-            if (memoized.ContainsKey(n))
+            if (!memoized.ContainsKey(n))
             {
-                return memoized[n];
+                memoized.Add(n, Calculate(n - 1) + Calculate(n - 2));
             }
 
-            // FIXME: Store the result in the dictionary
-            // Create a pull request with the fixed code.
-            return Calculate(n - 1) + Calculate(n - 2);
+            return memoized[n];
         }
     }
 
